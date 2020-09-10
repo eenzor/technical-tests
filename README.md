@@ -51,12 +51,11 @@ an attacker can no longer launch a shell in the image, neither can we.
 The command we use to build the golang binary is:
 
 ```
-GOOS=linux CGO_ENABLED=0 go build -ldflags "-s -w" -a -o golang-test .
+CGO_ENABLED=0 go build -ldflags "-s -w" -a -o golang-test .
 ```
 
-`GOOS=linux`, tells go to compile the binary for linux. Not strictly necessary, but a habit from developing on MacOS and deploying to Linux  
 `CGO_ENABLED=0`, this disables the use of shared C libraries and creates a static binary, this is necessary when running from scratch  
-`-ldflags "-s -w"`, this magic incantation strips symbols (-s), and removes the DWARF debugging table (-w). This will stop debugging tools (gdb/pprof) from working, but results in ~2mb smaller binaries.  
+`-ldflags "-s -w"`, this magic incantation strips symbols (-s), and removes the DWARF debugging table (-w). This will stop debugging tools (gdb/pprof) from working, but results in smaller binaries.  
 `-a`, tells go to recompile all packages (even up to date ones), this is done as a precaution when disabling CGO.  
 `-o`, the name of the binary to output  
 

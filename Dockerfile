@@ -24,7 +24,7 @@ WORKDIR /app
 
 ADD ./ /app
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w" -a -o golang-test .
+RUN CGO_ENABLED=0 go build -ldflags "-s -w" -a -o golang-test .
 
 ### run image with only the binary
 
